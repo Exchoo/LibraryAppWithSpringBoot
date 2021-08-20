@@ -1,0 +1,238 @@
+ <!-- <p>member works!</p>
+ <div>SAY : {{message.name}}</div>  -->
+
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;"> Welcome {{message.name}} {{message.surname}} </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+       <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a type="button" data-bs-toggle="modal" class="nav-link" data-target="#returnBookModal" (click)="onOpenModal(books,members,'returnBook')">Kitap İade <span class="sr-only">(current)</span></a>
+        </li>
+       </ul>
+    </div>
+  </nav>
+
+
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  <hr>
+  
+  <!--My Books List-->
+  <div class="container" id="main-container" style="margin-top: 170px; background-color: darkslategray; padding-bottom: 23px;" >
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3  style="text-align: center; position: static; margin-top: 50; color:blanchedalmond "> My Books </h3>
+                <div class="main-box no-header clearfix">
+                    <div class="main-box-body clearfix">
+                        <div id="main-container" class="table-responsive">
+                            <table class="table user-list">
+                                <thead>
+                                    <tr>
+                                 
+                                    <th><span>Photo</span></th>
+                                    <th><span>Name</span></th>
+                                    <th><span>Book1</span></th>
+                                    <th><span>Book2</span></th>
+                                    <th><span>Book3</span></th>
+                                    <th><span>My Status</span></th>
+                                    <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <img src="{{message?.imageUrl}}" alt="">
+                                            <!-- <a class="user-link">{{message?.name}}</a> -->
+                                        </td>
+                                        <td>{{message.name}}</td>
+                                        <td >{{kitapOne?.name}}</td>
+                                        <td>
+                                            {{kitapTwo?.name}}
+                                        </td>
+                                        <td>
+                                            {{kitapThree?.name}}
+                                        </td>
+                                        <td>
+                                            {{message.aktifMi}}
+                                        </td>
+                                        <td>                                                                      
+                                            <a class="table-link danger">
+                                                <span class="fa-stack" style="margin-bottom: 35px;"> 
+                                                  <a type="button" (click)="onOpenModal(members,null,'editMember')"  data-target="#updateMemberModal"  data-toggle="modal" class="btn btn-primary tooltips" data-placement="top"   data-original-title="edit"><i class="fa fa-pencil" ></i> </a>
+                                                  <a type="button"  data-target="#deleteManagerModal"  data-toggle="modal" class="btn btn-secondary tooltips" data-placement="top"   data-original-title="delete"><i class="fa fa-times"></i></a>
+                                                </span>
+                                            </a>
+                                        </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Books List-->
+    <div class="container" id="main-container" style="margin-top: 170px; margin-bottom: 100px; background-color: darkslategray; padding-bottom: 23px;">
+        <div class="container bootstrap snippets bootdey">
+            <div class="row">
+                <form class="form-inline my-2 my-lg-0">
+                    <input style="float: right; width: 250px; height: 50px; margin-bottom: 20px; margin-top: 20px;" (ngModelChange)="searchBooks(keyBook.value)"  #keyBook="ngModel" ngModel type="search"
+                     name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search Books..." required>
+                     <h3  style="text-align: center !important; position: static; margin-top: 50; color:blanchedalmond "> BOOK LİST </h3>
+                     <a type="button" (click)="scrollToTop(0,0)"  style="margin-left: 600px !important; color: aqua; font-size: 20px;">UP</a>
+                 </form>
+                <div class="col-lg-12">
+                    <div class="main-box no-header clearfix">
+                        <div class="main-box-body clearfix">
+                            <div id="main-container" class="table-responsive">
+                                <table class="table user-list" *ngFor="let books of books">
+                                    <thead>
+                                        <tr>
+                                          <th><span>Book</span></th>
+                                        <th><span>İd</span></th>
+                                        <th><span>status</span></th>
+                                        <th><span>publisher</span></th>
+                                        <th><span>author</span></th>
+                                        <th><span>type</span></th>
+                                        <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 300px !important;">
+                                                <!-- <img src="{{books?.imageUrl}}" alt=""> -->
+                                                <a  class="label label-default">{{books?.name}}</a>
+                                            </td>
+                                            <td>{{books?.id}}</td>
+                                            <td>{{books?.status}}</td>
+                                            <td>
+                                              <span class="label label-default">{{books?.author}}</span>
+                                          </td>
+                                          <td>
+                                            <span class="label label-default">{{books?.publisher}}</span>
+                                        </td>             
+                                            <td>
+                                              <span class="label label-default">{{books?.type}}</span>
+                                            </td>                       
+                                       </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+   
+
+    <!--MemberEdit-->
+    <div class="modal fade" id="updateMemberModal" tabindex="-1" role="dialog" aria-labelledby="memberEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Member</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form #editMember="ngForm" (ngSubmit)="onUpdateMember(editMember.value)">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" ngModel={{message?.name}} name="name" id="name" class="form-control" placeholder="Name"  >
+                </div>
+                <div class="form-group">
+                  <label for="name">Surname</label>
+                  <input type="text" ngModel={{message?.surname}} name="surname" id="surname" class="form-control" placeholder="Surname" required  >
+                </div>
+                <div class="form-group">
+                  <input  ngModel={{message?.id}} name="id" id="id" class="form-control" placeholder="id" >
+                  <input  ngModel={{message?.memberCode}}  name="userCode" id="userCode" class="form-control" placeholder="userCode" required >
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">tc</label>
+                  <input type="text" ngModel={{message?.tc_no}}  name="tc_no" id="tc_no" class="form-control" placeholder="T.C" required >
+                </div>
+                <div class="form-group">
+                  <label for="phone">Password</label>
+                  <input type="text" ngModel={{message?.pass}} name="pass" id="pass" class="form-control" placeholder="password" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone">status</label>
+                  <input type="text" ngModel={{message?.status}}  name="status" id="status" class="form-control" placeholder="status"required >
+                </div>
+                <div class="form-group">
+                  <label for="imageUrl">İmage Url</label>
+                  <input type="text" name="imageUrl" ngModel={{message?.imageUrl}} id="imageUrl" class="form-control" placeholder="imageUrl"required >
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Enabled(true/false)</label>
+                    <input type="text" name="aktifMi" ngModel={{message?.aktifMi}} id="aktifMi" class="form-control" placeholder="true/false" required >
+                  </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button (click)="onUpdateMember(editMember.value)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!--Return Book-->
+    <div class="modal fade" id="returnBookModal" tabindex="-1" role="dialog" aria-labelledby="bookReturnModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+           <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Return Book</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body" >
+               <form #returnBook="ngForm" (ngSubmit)="returnBooksFunction(returnBook,name)"> 
+               <!-- <div class="form-group">
+                   <label for="id">Book İD veya Barkod No</label>
+                   <input type="text" ngModel="{{issueBooks?.id}}" name="Bookid" id="Bookid" class="form-control" placeholder="Book Id" > 
+                   <select name="Bookid" id="Bookid" [(ngModel)]="issueBooks.id">
+                       <option [ngValue]="issueBooks.id"  [value]="issueBooks?.id" name="Bookid" id="Bookid"  class="form-control" >{{kitapOne.name}}</option>
+                      
+                   </select>
+                </div><br> -->
+
+                <form #issueibook='ngForm'>
+                  <div class="form-group">
+                    <select name="Bookid" id="Bookid"  [(ngModel)]="selectedId" #name="ngModel">
+                      <option name="Bookid" id="Bookid" class="form-control" [value]="kitapOne.id">{{kitapOne.name}}</option>
+                      <option  name="Bookid" id="Bookid"class="form-control" [value]="kitapTwo.id">{{kitapTwo.name}}</option>
+                      <option  name="Bookid" id="Bookid" class="form-control"[value]="kitapThree.id">{{kitapThree.name}}</option>
+                    </select>
+                  </div>
+                </form>
+               <div class="form-group">
+                   <label for="MemberId">Member Id</label>
+                   <input  ngModel={{message.id}} name="Memberid" id="Memberid" class="form-control" placeholder="Memberid" disabled>
+                </div><br>
+
+                   <!-- <div class="form-group">
+                     <input  ngModel="{{name?.status}}"   name="status" id="status" class="form-control" placeholder="status"  >
+                   </div><br> -->
+               </form>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button mat-stroked-button (click)="returnBooksFunction(returnBook,name)"   type="button" data-dismiss="modal" class="btn btn-primary behind" id="button">Save changes</button>
+           </div>
+           </div>
+       </div>
+   </div>

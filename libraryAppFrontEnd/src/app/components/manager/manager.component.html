@@ -1,0 +1,669 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;">Admin Panel </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+       <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a type="button" data-bs-toggle="modal" class="nav-link" data-target="#addmanagerModal" (click)="onOpenModal(null,null,null,'add')">Yönetici Ekle <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a type="button" data-bs-toggle="modal" class="nav-link" data-target="#addMemberModal" (click)="onOpenModal(null,null,null,'addMember')">Üye Ekle <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a type="button" data-bs-toggle="modal" class="nav-link" data-target="#addBookModal" (click)="onOpenModal(null,null,null,'addBook')">Kitap Ekle <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item active">
+      <a type="button" data-bs-toggle="modal" class="nav-link" data-target="#returnBookModal" (click)="onOpenModal(null,books,members,'returnBook')">Kitap İade <span class="sr-only">(current)</span></a>
+  </li>
+   <li class="nav-item active">
+      <a style="margin-left: 250px;" type="button" data-bs-toggle="modal" class="nav-link"  (click)="scrollToTop(150,150)">Manager List <span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item active">
+    <a style="margin-left: 50px;" type="button" data-bs-toggle="modal" class="nav-link"  (click)="scrollToTop(1000,1150)">Member List <span class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item active">
+  <a style="margin-left: 50px;" type="button" data-bs-toggle="modal" class="nav-link"  (click)="scrollToTop(2400,2400)">Book List <span class="sr-only">(current)</span></a>
+</li>
+  
+       </ul>
+    </div>
+  </nav>
+  
+
+
+
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  <hr>
+  
+  <!--Manager List-->
+  <div class="container" id="main-container" style="margin-top: 170px; background-color: darkslategray; padding-bottom: 23px;" >
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+          <form class="form-inline my-2 my-lg-0">
+            <input style="float: right; width: 250px; height: 50px; margin-bottom: 20px; margin-top: 20px;" (ngModelChange)="searchManagers(key.value)"  #key="ngModel" ngModel type="search"
+               name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search Managers..." required>
+               <h3  style="text-align: right; position: static; margin-top: 50; color:blanchedalmond "> MANAGER LİST </h3>
+               <a type="button" (click)="scrollToTop(0,0)" style="margin-left: 600px !important; color: aqua; font-size: 20px;">UP</a>
+         </form>
+            <div class="col-lg-12">
+                <div class="main-box no-header clearfix">
+                    <div class="main-box-body clearfix">
+                        <div id="main-container" class="table-responsive">
+                            <table class="table user-list" *ngFor="let managers of managers">
+                                <thead>
+                                    <tr>
+                                      <th><span>Admin</span></th>
+                                    <th><span>İd</span></th>
+                                    <th class="text-center"><span>Status</span></th>
+                                    <th><span>Email</span></th>
+                                    <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 400px !important;"> 
+                                            <img src="{{managers?.imageUrl}}" alt="">
+                                            <a class="user-link">{{managers?.name}}</a>
+                                            <span class="user-subhead">{{managers?.status}}</span>
+                                        </td>
+                                        <td>{{managers.id}}</td>
+                                        <td class="text-center">
+                                            <span class="label label-default">{{managers?.aktif}}</span>
+                                        </td>
+                                        <td>
+                                            <a>{{managers?.email }}</a>
+                                        </td>
+                                        <td>                                                                      
+                                            <a class="table-link danger">
+                                                <span class="fa-stack" style="margin-bottom: 35px;"> 
+                                                  <a type="button" (click)="onOpenModal(managers,null,null,'edit')"  data-target="#updateManagerModal"  data-toggle="modal" class="btn btn-primary tooltips" data-placement="top"   data-original-title="edit"><i class="fa fa-pencil" ></i> </a>
+                                                  <a type="button" (click)="onOpenModal(managers,null,null,'delete')" data-target="#deleteManagerModal"  data-toggle="modal" class="btn btn-secondary tooltips" data-placement="top"   data-original-title="delete"><i class="fa fa-times"></i></a>
+                                                </span>
+                                            </a>
+                                        </td>
+                                   </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  <!--Member List-->
+    <div class="container" id="main-container" style="margin-top: 170px; margin-bottom: 100px; background-color: darkslategray; padding-bottom: 23px;">
+      <div class="container bootstrap snippets bootdey">
+          <div class="row">
+            <form class="form-inline my-2 my-lg-0">
+              <input style="float: right; width: 250px; height: 50px; margin-bottom: 20px; margin-top: 20px;" (ngModelChange)="searchMembers(keyy.value)"  #keyy="ngModel" ngModel type="search"
+               name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search Members..." required>
+               <h3  style="text-align: left; position: static; margin-top: 50; color:blanchedalmond "> MEMBER LİST </h3>
+               <a type="button" (click)="scrollToTop(0,0)" style="margin-left: 600px !important; color: aqua; font-size: 20px;">UP</a>
+           </form>
+              <div class="col-lg-12">
+                  <div class="main-box no-header clearfix">
+                      <div class="main-box-body clearfix">
+                          <div id="main-container" class="table-responsive">
+                              <table class="table user-list" *ngFor="let members of members">
+                                  <thead>
+                                      <tr>
+                                        <th><span>Member</span></th>
+                                      <th><span>İd</span></th>
+                                      <th class="text-center"><span>Status</span></th>
+                                      <th><span>TC</span></th>
+                                      <th>&nbsp;</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td style="width: 600px !important;">
+                                              <img src="{{members?.imageUrl}}" alt="">
+                                              <a class="user-link">{{members?.name}} {{members?.surname}}</a>
+                                              <span class="user-subhead">{{members?.status}}</span>
+                                          </td>
+                                          <td>{{members.id}}</td>
+                                          <td class="text-center">
+                                              <span class="label label-default">{{members?.aktifMi}}</span>
+                                          </td>
+                                          <td>
+                                              <a>{{members?.tc_no}}</a>
+                                          </td>
+                                          <td>                                                                      
+                                              <a class="table-link danger">
+                                                  <span class="fa-stack" style="margin-bottom: 35px;"> 
+                                                    <a type="button" (click)="onOpenModal(null,members,null,'editMember')"  data-target="#updateMemberModal"  data-toggle="modal" class="btn btn-primary tooltips" data-placement="top"   data-original-title="edit"><i class="fa fa-pencil" ></i> </a>
+                                                    <a type="button" (click)="onOpenModal(null,members,null,'deleteMember')" data-target="#deleteMemberModal"  data-toggle="modal" class="btn btn-secondary tooltips" data-placement="top"   data-original-title="delete"><i class="fa fa-times"></i></a>
+                                                  </span>
+                                              </a>
+                                          </td>
+                                     </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+  
+  
+   <!--Book List-->
+      <div class="container" id="main-container" style="margin-top: 170px; margin-bottom: 100px; background-color: darkslategray; padding-bottom: 23px;">
+        <div class="container bootstrap snippets bootdey">
+            <div class="row">
+              <form class="form-inline my-2 my-lg-0">
+                <input style="float: right; width: 250px; height: 50px; margin-bottom: 20px; margin-top: 20px;" (ngModelChange)="searchBooks(keyBook.value)"  #keyBook="ngModel" ngModel type="search"
+                 name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search Books..." required>
+                 <h3  style="text-align: left; position: static; margin-top: 50; color:blanchedalmond "> BOOK LİST </h3>
+                 <a type="button" (click)="scrollToTop(0,0)" style="margin-left: 600px !important; color: aqua; font-size: 20px;">UP</a>
+             </form>
+                <div class="col-lg-12">
+                    <div class="main-box no-header clearfix">
+                        <div class="main-box-body clearfix">
+                            <div id="main-container" class="table-responsive">
+                                <table class="table user-list" *ngFor="let books of books">
+                                    <thead>
+                                        <tr>
+                                          <th><span>Book</span></th>
+                                        <th><span>İd</span></th>
+                                        <th><span>status</span></th>
+                                        <th><span>publisher</span></th>
+                                        <th><span>author</span></th>
+                                        <th><span>type</span></th>
+                                        <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td  style="width: 300px !important;">
+                                                <!-- <img src="{{books?.imageUrl}}" alt=""> -->
+                                                <a class="label label-default">{{books?.name}}</a>
+                                            </td>
+                                            <td>{{books?.id}}</td>
+                                            <td>{{books?.status}}</td>
+                                            <td>
+                                              <span class="label label-default">{{books?.author}}</span>
+                                          </td>
+                                          <td>
+                                            <span class="label label-default">{{books?.publisher}}</span>
+                                        </td>             
+                                            <td>
+                                              <span class="label label-default">{{books?.type}}</span>
+                                            </td>
+                                            <td>                                                                      
+                                                <a class="table-link danger">
+                                                    <span class="fa-stack" style="margin-bottom: 80px;"> 
+                                                <td>
+                                                  <a type="button" (click)="onOpenModal(null,null,books,'editBook')"  data-target="#updateBookModal"  data-toggle="modal" class="btn btn-primary tooltips"    data-original-title="edit"><i class="fa fa-pencil" ></i> </a>
+                                                  <a type="button" (click)="onOpenModal(null,null,books,'deleteBook')" data-target="#deleteBookModal"  data-toggle="modal" class="btn btn-secondary tooltips"    data-original-title="delete"><i class="fa fa-times"></i></a>
+                                                </td>
+                                                <td>
+                                                  <a type="button" (click)="onOpenModal(null,null,books,'issueBook')" data-target="#ıssueBookModal"   data-toggle="modal" class="btn btn-secondary tooltips"    data-original-title="issue"><i class="fa fa-book"></i></a>                                                </td>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                       </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+
+
+  <!--ADD Manager-->
+  <div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddManager(addForm)">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" ngModel name="email" id="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Password</label>
+                <input type="text" ngModel name="pass" id="pass" class="form-control" placeholder="Password" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Status</label>
+                <input type="text" ngModel name="status" id="status" class="form-control" placeholder="Status" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Enabled</label>
+                <input type="text" ngModel name="aktif" id="aktif" class="form-control" placeholder="Aktif" required>
+              </div>
+            <div class="form-group">
+              <label for="imageUrl">İmage Url</label>
+              <input type="text" ngModel name="imageUrl" id="imageUrl" class="form-control" placeholder="imageUrl" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="add-manager-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button [disabled]="addForm.invalid" (click)="onAddManager(addForm)" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--ADD Member-->
+  <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #add="ngForm" (ngSubmit)="onAddMember(add)">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Surname</label>
+              <input type="text" ngModel name="surname" id="surname" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">tc</label>
+              <input type="text" ngModel name="tc_no" id="tc_no" class="form-control" placeholder="tc_no" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Password</label>
+                <input type="text" ngModel name="pass" id="pass" class="form-control" placeholder="Password" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Status</label>
+                <input type="text" ngModel name="status" id="status" class="form-control" placeholder="Status" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Enabled</label>
+                <input type="text" ngModel name="aktifMi" id="aktifMi" class="form-control" placeholder="Aktif" required>
+              </div>
+            <div class="form-group">
+              <label for="imageUrl">İmage Url</label>
+              <input type="text" ngModel name="imageUrl" id="imageUrl" class="form-control" placeholder="imageUrl" required>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="add-member-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button  (click)="onAddMember(add)" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!--ADD Book-->
+  <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addBook="ngForm" (ngSubmit)="onAddBook(addBook)">
+            <div class="form-group">
+              <label for="name">barkodNo</label>
+              <input type="number" ngModel name="barkodNo" id="barkodNo" class="form-control" placeholder="barkodNo" required>
+            </div>
+            <div class="form-group">
+              <label for="name">name</label>
+              <input type="text" ngModel name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">author</label>
+              <input type="text" ngModel name="author" id="author" class="form-control" placeholder="author" required>
+            </div>
+            <div class="form-group">
+                <label for="email">publisher</label>
+                <input type="text" ngModel name="publisher" id="publisher" class="form-control" placeholder="publisher" required>
+              </div>
+              <div class="form-group">
+                <label for="email">status</label>
+                <input type="text"  ngModel name="status" id="status" class="form-control" placeholder="True" disabled>
+              </div>
+              <div class="form-group">
+                <label for="email">type</label>
+                <input type="text" ngModel name="type" id="type" class="form-control" placeholder="type" required>
+              </div>
+            <!-- <div class="form-group">
+              <label for="imageUrl">İmage Url</label>
+              <input type="text" ngModel name="imageUrl" id="imageUrl" class="form-control" placeholder="imageUrl" required>
+              </div> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="add-book-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button  (click)="onAddBook(addBook)" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Update Manager-->
+  <div class="modal fade" id="updateManagerModal" tabindex="-1" role="dialog" aria-labelledby="managerEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel="{{editManager?.name}}" name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <input type="hidden" ngModel="{{editManager?.id}}"  name="id" id="id" class="form-control" placeholder="id" >
+              <input type="hidden" ngModel="{{editManager?.employeeCode}}"  name="userCode" id="userCode" class="form-control" placeholder="userCode" >
+            </div>
+  
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" ngModel="{{editManager?.email}}"  name="email" id="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Password</label>
+              <input type="text" ngModel="{{editManager?.pass}}" name="pass" id="pass" class="form-control" placeholder="password" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">status</label>
+              <input type="text" ngModel="{{editManager?.status}}"  name="status" id="status" class="form-control" placeholder="status" required>
+            </div>
+            <div class="form-group">
+              <label for="imageUrl">İmage Url</label>
+              <input type="text" name="imageUrl" ngModel="{{editManager?.imageUrl}}" id="imageUrl" class="form-control" placeholder="imageUrl" required>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">Enabled(true/false)</label>
+                <input type="text" name="aktif" ngModel="{{editManager?.aktif}}" id="aktif" class="form-control" placeholder="true/false" required>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="onUpdateManager(editForm.value)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Update Member-->
+  <div class="modal fade" id="updateMemberModal" tabindex="-1" role="dialog" aria-labelledby="memberEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editMemberr="ngForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel="{{editMember?.name}}" name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="name">Surname</label>
+              <input type="text" ngModel="{{editMember?.surname}}" name="surname" id="surname" class="form-control" placeholder="Surname" required>
+            </div>
+            <div class="form-group">
+              <input type="hidden" ngModel="{{editMember?.id}}"  name="id" id="id" class="form-control" placeholder="id" >
+              <input type="hidden" ngModel="{{editMember?.memberCode}}"  name="userCode" id="userCode" class="form-control" placeholder="userCode" >
+            </div>
+            
+            <div class="form-group">
+              <label for="email">tc</label>
+              <input type="text" ngModel="{{editMember?.tc_no}}"  name="tc_no" id="tc_no" class="form-control" placeholder="T.C" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Password</label>
+              <input type="text" ngModel="{{editMember?.pass}}" name="pass" id="pass" class="form-control" placeholder="password" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">status</label>
+              <input type="text" ngModel="{{editMember?.status}}"  name="status" id="status" class="form-control" placeholder="status" required>
+            </div>
+            <div class="form-group">
+              <label for="imageUrl">İmage Url</label>
+              <input type="text" name="imageUrl" ngModel="{{editMember?.imageUrl}}" id="imageUrl" class="form-control" placeholder="imageUrl" required>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">Enabled(true/false)</label>
+                <input type="text" name="aktifMi" ngModel="{{editMember?.aktifMi}}" id="aktifMi" class="form-control" placeholder="true/false" required>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="onUpdateMember(editMemberr.value)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Update Book-->
+  <div class="modal fade" id="updateBookModal" tabindex="-1" role="dialog" aria-labelledby="bookEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #edittBook="ngForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" ngModel="{{editBooks?.name}}" name="name" id="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+              <label for="name">barkodNo</label>
+              <input type="text" ngModel="{{editBooks?.barkodNo}}" name="barkodNo" id="barkodNo" class="form-control" placeholder="barkodNo" required>
+            </div>
+            <div class="form-group">
+              <input type="hidden" ngModel="{{editBooks?.id}}"  name="id" id="id" class="form-control" placeholder="id"  disabled>
+              <input type="hidden" ngModel="{{editBooks?.author}}"  name="author" id="author" class="form-control" placeholder="author" >
+            </div>
+            
+            <div class="form-group">
+              <label for="email">publisher</label>
+              <input type="text" ngModel="{{editBooks?.publisher}}"  name="publisher" id="publisher" class="form-control" placeholder="publisher" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">status</label>
+              <input type="text" ngModel="{{editBooks?.status}}" name="status" id="status" class="form-control" placeholder="status" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">type</label>
+              <input type="text" ngModel="{{editBooks?.type}}"  name="type" id="type" class="form-control" placeholder="type" required>
+            </div>
+          
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button (click)="onUpdateBook(edittBook.value)" type="button" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Manager-->
+  <div class="modal fade" id="deleteManagerModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Employee</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete employee? {{deleteManager?.name}}? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button (click)="onDeleteManager(deleteManager)" data-dismiss="modal" type="button" class="btn btn-danger">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Member-->
+  <div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Member</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete member {{deleteMember?.name}}? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button (click)="onDeleteMember(deleteMember)" data-dismiss="modal" type="button" class="btn btn-danger">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Book-->
+  <div class="modal fade" id="deleteBookModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete member {{deleteBooks?.name}}? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button (click)="onDeleteBook(deleteBooks)" data-dismiss="modal" type="button" class="btn btn-danger">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!--Issue Book-->
+  <div class="modal fade" id="ıssueBookModal" tabindex="-1" role="dialog" aria-labelledby="bookIssueModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Issue Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          <form #issueBook="ngForm" (ngSubmit)="issueBooksFunction(issueBook,issueibook,name)">
+            <div class="form-group">
+              <input type="text" ngModel="{{issueBooks?.name}}" name="name" id="name" class="form-control" placeholder="Name" disabled>
+            </div><br>
+            <div class="form-group">
+              <label for="name">barkodNo</label>
+              <input type="text" ngModel="{{issueBooks?.barkodNo}}" name="barkodNo" id="barkodNo" class="form-control" placeholder="barkodNo" disabled >
+            </div>
+            <div class="form-group">
+              <input  ngModel="{{issueBooks?.id}}"   name="id" id="id" class="form-control" placeholder="id"  disabled>
+            </div><br>
+            <div class="form-group">
+              <input type="hidden" ngModel="{{issueBooks?.status}}"   name="status" id="status" class="form-control" placeholder="status"  disabled>
+            </div><br>
+          </form>
+          <form #issueibook='ngForm'>
+            <div class="form-group">
+              <select name="name_id"  [(ngModel)]="selectedId" #name="ngModel">
+                <option *ngFor="let name of members"   [value]="name.id">{{name.name}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button mat-stroked-button (click)="issueBooksFunction(issueBook,issueibook,name)"   type="button" data-dismiss="modal" class="btn btn-primary behind" id="button">Save changes</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <!--Return Book-->
+   <div class="modal fade" id="returnBookModal" tabindex="-1" role="dialog" aria-labelledby="bookReturnModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Return Book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          <form #returnBook="ngForm" (ngSubmit)="returnBooksFunction(returnBook)"> <!-- (ngSubmit)="issueBooksFunction(issueBook,issueibook,name)" ekle-->
+            <div class="form-group">
+              <label for="id">Book İD veya Barkod No</label>
+              <input type="text" ngModel="{{issueBooks?.id}}" name="Bookid" id="Bookid" class="form-control" placeholder="Book Id" >
+            </div><br>
+            <div class="form-group">
+              <label for="MemberId">Member Id</label>
+              <input  ngModel="{{returnMember?.id}}" name="Memberid" id="Memberid" class="form-control" placeholder="Memberid" >
+            </div><br>
+            <!-- <div class="form-group">
+              <input  ngModel="{{name?.status}}"   name="status" id="status" class="form-control" placeholder="status"  >
+            </div><br> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button mat-stroked-button (click)="returnBooksFunction(returnBook)"   type="button" data-dismiss="modal" class="btn btn-primary behind" id="button">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
